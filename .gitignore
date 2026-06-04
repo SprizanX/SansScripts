@@ -1,0 +1,9 @@
+# local backups (do not push to GitHub)
+backups/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# Optional logs
+*.log
