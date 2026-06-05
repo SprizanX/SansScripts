@@ -26,7 +26,8 @@
   --tap: 52px;
   --maxw: 520px;
 
-  --overlay: rgba(0,0,0,.45);
+  /* was too strong */
+  --overlay: rgba(0,0,0,.22);
 }
 
 /* System light theme: ONLY when user chose "system" (i.e., no data-theme set) */
@@ -46,7 +47,8 @@
     --shadow: 0 18px 60px rgba(10,12,18,.12);
     --shadow2: 0 12px 32px rgba(10,12,18,.10);
 
-    --overlay: rgba(10,12,18,.26);
+    /* even softer in light */
+    --overlay: rgba(10,12,18,.12);
   }
 }
 
@@ -61,7 +63,7 @@ html[data-theme="dark"]{
   --line2:rgba(255,255,255,.16);
   --shadow: 0 18px 60px rgba(0,0,0,.45);
   --shadow2: 0 12px 32px rgba(0,0,0,.34);
-  --overlay: rgba(0,0,0,.45);
+  --overlay: rgba(0,0,0,.22);
 }
 
 html[data-theme="light"]{
@@ -79,7 +81,7 @@ html[data-theme="light"]{
   --shadow: 0 18px 60px rgba(10,12,18,.12);
   --shadow2: 0 12px 32px rgba(10,12,18,.10);
 
-  --overlay: rgba(10,12,18,.26);
+  --overlay: rgba(10,12,18,.12);
 }
 
 /* =========================
@@ -99,6 +101,7 @@ body{
   overflow-x:hidden;
 }
 
+/* фон: в light сделаем мягче через opacity */
 body::before{
   content:"";
   position:fixed;
@@ -315,7 +318,7 @@ html:not([data-theme]) body::after{
   z-index: 20;
 }
 
-/* Panel is now sibling of .brand inside .hero, so anchor it to .hero */
+/* Panel is sibling of .brand inside .hero */
 .panel{
   position:absolute;
   top: 64px;
