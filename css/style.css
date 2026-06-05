@@ -26,10 +26,8 @@
   --tap: 52px;
   --maxw: 520px;
 
-  /* overlay behind the panel */
   --overlay: rgba(0,0,0,.22);
 
-  /* solid menu background (less transparent than cards) */
   --menuBg: rgba(16, 18, 26, .95);
   --menuBg2: rgba(16, 18, 26, .92);
 }
@@ -297,7 +295,7 @@ html:not([data-theme]) body::after{ opacity:.06; }
 .footerText{ margin: 10px 0 0; color: var(--muted); font-size: 12px; }
 
 /* =========================
-   THEME UI (compact)
+   THEME UI (extra-compact)
    ========================= */
 
 .iconBtn{
@@ -318,7 +316,7 @@ html:not([data-theme]) body::after{ opacity:.06; }
 
 .panel{
   position:absolute;
-  top: 62px;
+  top: 60px;
   right: 12px;
   width: min(320px, calc(100% - 24px));
   border-radius: 16px;
@@ -332,13 +330,8 @@ html:not([data-theme]) body::after{ opacity:.06; }
   display:none;
 }
 
-.panelTitle{
-  font-weight: 800;
-  letter-spacing: .2px;
-  font-size: 13px;
-  margin: 0 0 8px;
-  color: var(--text);
-}
+/* hide "Тема" title to make panel shorter */
+.panelTitle{ display:none; }
 
 /* Segments 3-in-row */
 .seg{
@@ -348,7 +341,8 @@ html:not([data-theme]) body::after{ opacity:.06; }
 }
 
 .segBtn{
-  min-height: 38px;
+  min-height: 34px;
+  padding: 6px 8px;
   border-radius: 14px;
   border: 1px solid var(--line2);
   background: rgba(255,255,255,.05);
