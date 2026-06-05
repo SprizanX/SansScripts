@@ -2,7 +2,6 @@
    THEME TOKENS (defaults)
    ========================= */
 
-/* Default = dark tokens */
 :root{
   --bg:#0d0e12;
 
@@ -18,10 +17,6 @@
   --shadow: 0 18px 60px rgba(0,0,0,.45);
   --shadow2: 0 12px 32px rgba(0,0,0,.34);
 
-  --cyan:#00e5ff;
-  --pink:#ff3df2;
-  --violet:#7c4dff;
-
   --radius: 18px;
   --tap: 52px;
   --maxw: 520px;
@@ -32,7 +27,6 @@
   --menuBg2: rgba(16, 18, 26, .92);
 }
 
-/* System light theme: ONLY when user chose "system" (i.e., no data-theme set) */
 @media (prefers-color-scheme: light){
   html:not([data-theme]){
     --bg:#f6f7fb;
@@ -56,7 +50,6 @@
   }
 }
 
-/* Forced themes via JS */
 html[data-theme="dark"]{
   --bg:#0d0e12;
   --panel:rgba(18, 20, 28, .55);
@@ -144,7 +137,6 @@ html:not([data-theme]) body::after{ opacity:.06; }
   padding-bottom: 10px;
 }
 
-/* anchor for theme panel */
 .hero{
   margin-top: 8px;
   position: relative;
@@ -166,17 +158,6 @@ html:not([data-theme]) body::after{ opacity:.06; }
   overflow:hidden;
 }
 
-.brand::before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  background:
-    radial-gradient(220px 140px at 15% 35%, rgba(0,229,255,.16), transparent 60%),
-    radial-gradient(220px 140px at 85% 35%, rgba(255,61,242,.12), transparent 60%);
-  opacity:.7;
-  pointer-events:none;
-}
-
 .logo{
   width: 44px;
   height: 44px;
@@ -186,13 +167,10 @@ html:not([data-theme]) body::after{ opacity:.06; }
   border-radius: 14px;
   background: rgba(255,255,255,.06);
   border:1px solid var(--line2);
-  box-shadow: 0 0 0 1px rgba(0,229,255,.12), 0 0 22px rgba(0,229,255,.10);
   flex:0 0 auto;
-  position:relative;
-  z-index:1;
 }
 
-.brandText{ position:relative; z-index:1; }
+.brandText{ flex: 1 1 auto; }
 .title{ margin:0; font-size: 20px; letter-spacing: .2px; }
 .subtitle{
   margin: 3px 0 0;
@@ -234,7 +212,6 @@ html:not([data-theme]) body::after{ opacity:.06; }
   color: var(--text);
   font-weight: 700;
   letter-spacing:.2px;
-  transition: transform .12s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease, opacity .18s ease;
 }
 
 .btn:active{ transform: translateY(1px) scale(.99); }
@@ -250,12 +227,13 @@ html:not([data-theme]) body::after{ opacity:.06; }
   overflow:hidden;
   animation: pulseNeon 1.8s ease-in-out infinite;
 }
+
 @keyframes pulseNeon{
   0%,100%{ box-shadow: 0 0 0 1px rgba(0,229,255,.18), 0 12px 40px rgba(0,229,255,.10), 0 10px 28px rgba(124,77,255,.08); }
   50%{ box-shadow: 0 0 0 1px rgba(0,229,255,.26), 0 18px 60px rgba(0,229,255,.14), 0 14px 36px rgba(255,61,242,.08); }
 }
 
-.btnGhost{ font-weight: 700; background: rgba(255,255,255,.05); }
+.btnGhost{ background: rgba(255,255,255,.05); }
 
 .grid2{
   display:grid;
@@ -274,8 +252,6 @@ html:not([data-theme]) body::after{ opacity:.06; }
   border-radius: 18px;
   background: rgba(255,255,255,.05);
   border: 1px solid var(--line);
-  box-shadow: 0 0 0 1px rgba(255,255,255,.03);
-  -webkit-tap-highlight-color: transparent;
 }
 
 .cardTitle{ font-weight: 800; letter-spacing: .2px; }
@@ -295,11 +271,10 @@ html:not([data-theme]) body::after{ opacity:.06; }
 .footerText{ margin: 10px 0 0; color: var(--muted); font-size: 12px; }
 
 /* =========================
-   THEME UI (extra-compact)
+   THEME UI
    ========================= */
 
 .iconBtn{
-  margin-left:auto;
   width: 44px;
   height: 44px;
   border-radius: 14px;
@@ -318,7 +293,7 @@ html:not([data-theme]) body::after{ opacity:.06; }
   position:absolute;
   top: 60px;
   right: 12px;
-  width: min(320px, calc(100% - 24px));
+  width: min(340px, calc(100% - 24px));
   border-radius: 16px;
   border: 1px solid var(--line);
   background: linear-gradient(180deg, var(--menuBg), var(--menuBg2));
@@ -330,15 +305,22 @@ html:not([data-theme]) body::after{ opacity:.06; }
   display:none;
 }
 
-/* hide "Тема" title to make panel shorter */
-.panelTitle{ display:none; }
+.panelTitle{
+  font-weight: 900;
+  letter-spacing: .2px;
+  font-size: 12px;
+  margin: 6px 0 8px;
+  color: var(--muted);
+}
+.panelTitle2{ margin-top: 12px; }
 
-/* Segments 3-in-row */
 .seg{
   display:grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 8px;
 }
+
+.seg2{ grid-template-columns: 1fr 1fr; }
 
 .segBtn{
   min-height: 34px;
@@ -367,32 +349,35 @@ html:not([data-theme]) body::after{ opacity:.06; }
   display:none;
 }
 
-/* Responsive */
+/* =========================
+   LITE MODE (manual switch)
+   ========================= */
+
+html[data-lite="1"] body::before,
+html[data-lite="1"] body::after{
+  opacity: .04 !important;
+}
+
+html[data-lite="1"] .brand,
+html[data-lite="1"] .section,
+html[data-lite="1"] .panel{
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: var(--shadow2) !important;
+}
+
+html[data-lite="1"] .btnPrimary{
+  animation: none !important;
+}
+
 @media (max-width: 360px){
   .grid2{ grid-template-columns: 1fr; }
   .wrap{ width: calc(100% - 24px); }
 }
 
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce){
   *{
     transition: none !important;
     animation: none !important;
   }
-}
-
-/* Lite mode (performance) */
-@media (max-width: 420px){
-  .brand,
-  .section{
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    box-shadow: var(--shadow2);
-  }
-  .panel{
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    box-shadow: var(--shadow2);
-  }
-  .btnPrimary{ animation: none; }
 }

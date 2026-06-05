@@ -1,71 +1,90 @@
 (() => {
   "use strict";
 
-  const STORAGE_KEY = "theme"; // dark | light | system
+  const THEME_KEY = "theme"; // dark | light | system
+  const LITE_KEY = "lite";   // "1" | "0"
 
   const qs = (sel) => document.querySelector(sel);
   const qsa = (sel) => Array.from(document.querySelectorAll(sel));
 
-  function normalizeTheme(v) {
+  function normTheme(v){
     if (v === "dark" || v === "light" || v === "system") return v;
     return "system";
   }
 
-  function applyTheme(theme) {
-    const t = normalizeTheme(theme);
-    const root = document.documentElement;
-
-    if (t === "system") {
-      root.removeAttribute("data-theme");
-    } else {
-      root.setAttribute("data-theme", t);
-    }
+  function normLite(v){
+    return v === "1" ? "1" : "0";
   }
 
-  function setActiveButton(theme) {
-    const t = normalizeTheme(theme);
-    const buttons = qsa(".segBtn");
-    buttons.forEach((b) => b.classList.remove("isActive"));
+  function applyTheme(theme){
+    const t = normTheme(theme);
+    const root = document.documentElement;
+    if (t === "system") root.removeAttribute("data-theme");
+    else root.setAttribute("data-theme", t);
+  }
 
-    const active = buttons.find((b) => (b.dataset.theme || "") === t);
+  function applyLite(lite){
+    const v = normLite(lite);
+    const root = document.documentElement;
+    if (v === "1") root.setAttribute("data-lite", "1");
+    else root.removeAttribute("data-lite");
+  }
+
+  function setActiveThemeBtn(theme){
+    const t = normTheme(theme);
+    const buttons = qsa(".segBtn[data-theme]");
+    buttons.forEach(b => b.classList.remove("isActive"));
+    const active = buttons.find(b => (b.dataset.theme || "") === t);
     if (active) active.classList.add("isActive");
   }
 
-  function loadTheme() {
-    try {
-      return normalizeTheme(localStorage.getItem(STORAGE_KEY));
-    } catch (_) {
-      return "system";
-    }
+  function setActiveLiteBtn(lite){
+    const v = normLite(lite);
+    const buttons = qsa(".segBtn[data-lite]");
+    buttons.forEach(b => b.classList.remove("isActive"));
+    const active = buttons.find(b => (b.dataset.lite || "") === v);
+    if (active) active.classList.add("isActive");
   }
 
-  function saveTheme(theme) {
-    const t = normalizeTheme(theme);
-    try {
-      localStorage.setItem(STORAGE_KEY, t);
-    } catch (_) {
-      // ignore
-    }
+  function loadTheme(){
+    try { return normTheme(localStorage.getItem(THEME_KEY)); }
+    catch (_) { return "system"; }
+  }
+
+  function loadLite(){
+    try { return normLite(localStorage.getItem(LITE_KEY)); }
+    catch (_) { return "0"; }
+  }
+
+  function saveTheme(theme){
+    const t = normTheme(theme);
+    try { localStorage.setItem(THEME_KEY, t); } catch (_) {}
     return t;
   }
 
-  function openPanel(btn, panel, overlay) {
+  function saveLite(lite){
+    const v = normLite(lite);
+    try { localStorage.setItem(LITE_KEY, v); } catch (_) {}
+    return v;
+  }
+
+  function openPanel(btn, panel, overlay){
     panel.style.display = "block";
     overlay.style.display = "block";
-    panel.setAttribute("aria-hidden", "false");
-    overlay.setAttribute("aria-hidden", "false");
-    btn.setAttribute("aria-expanded", "true");
+    panel.setAttribute("aria-hidden","false");
+    overlay.setAttribute("aria-hidden","false");
+    btn.setAttribute("aria-expanded","true");
   }
 
-  function closePanel(btn, panel, overlay) {
+  function closePanel(btn, panel, overlay){
     panel.style.display = "none";
     overlay.style.display = "none";
-    panel.setAttribute("aria-hidden", "true");
-    overlay.setAttribute("aria-hidden", "true");
-    btn.setAttribute("aria-expanded", "false");
+    panel.setAttribute("aria-hidden","true");
+    overlay.setAttribute("aria-hidden","true");
+    btn.setAttribute("aria-expanded","false");
   }
 
-  function isOpen(panel) {
+  function isOpen(panel){
     return panel.style.display === "block";
   }
 
@@ -75,34 +94,40 @@
     const overlay = qs("#themeOverlay");
     if (!btn || !panel || !overlay) return;
 
-    // init theme
-    const current = loadTheme();
-    applyTheme(current);
-    setActiveButton(current);
+    const t = loadTheme();
+    const l = loadLite();
 
-    // open/close by button
+    applyTheme(t);
+    setActiveThemeBtn(t);
+
+    applyLite(l);
+    setActiveLiteBtn(l);
+
     btn.addEventListener("click", () => {
-      if (isOpen(panel)) {
-        closePanel(btn, panel, overlay);
-      } else {
-        openPanel(btn, panel, overlay);
-      }
+      if (isOpen(panel)) closePanel(btn, panel, overlay);
+      else openPanel(btn, panel, overlay);
     });
 
-    // close by tapping outside
     overlay.addEventListener("click", () => closePanel(btn, panel, overlay));
 
-    // close on ESC
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && isOpen(panel)) closePanel(btn, panel, overlay);
     });
 
-    // theme selection
-    qsa(".segBtn").forEach((b) => {
+    qsa(".segBtn[data-theme]").forEach((b) => {
       b.addEventListener("click", () => {
         const next = saveTheme(b.dataset.theme);
         applyTheme(next);
-        setActiveButton(next);
+        setActiveThemeBtn(next);
+        closePanel(btn, panel, overlay);
+      });
+    });
+
+    qsa(".segBtn[data-lite]").forEach((b) => {
+      b.addEventListener("click", () => {
+        const next = saveLite(b.dataset.lite);
+        applyLite(next);
+        setActiveLiteBtn(next);
         closePanel(btn, panel, overlay);
       });
     });
