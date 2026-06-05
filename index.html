@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="color-scheme" content="dark" />
+  <meta name="color-scheme" content="dark light" />
   <meta name="theme-color" content="#0d0e12" />
 
   <title>SansScripts — быстрые ссылки</title>
@@ -36,17 +36,34 @@
   <meta name="twitter:description" content="Один тап — и готово: Telegram, TikTok/YouTube и скачивание Delta/Fluxus." />
 
   <link rel="stylesheet" href="css/style.css" />
+  <script defer src="js/theme.js"></script>
 </head>
 <body>
   <main class="wrap" role="main">
     <header class="hero">
       <div class="brand">
         <div class="logo" aria-hidden="true">🧊</div>
+
         <div class="brandText">
           <h1 class="title">SansScripts</h1>
           <p class="subtitle">Все ссылки тут. Жми кнопку — и готово.</p>
         </div>
+
+        <button class="iconBtn" type="button" id="themeBtn" aria-label="Настройки темы" aria-expanded="false">
+          ⚙️
+        </button>
+
+        <div class="panel" id="themePanel" role="dialog" aria-label="Тема" aria-hidden="true">
+          <div class="panelTitle">Тема</div>
+          <div class="seg" role="group" aria-label="Выбор темы">
+            <button class="segBtn" type="button" data-theme="dark">Тёмная</button>
+            <button class="segBtn" type="button" data-theme="light">Светлая</button>
+            <button class="segBtn" type="button" data-theme="system">Система</button>
+          </div>
+        </div>
       </div>
+
+      <div class="overlay" id="themeOverlay" aria-hidden="true"></div>
     </header>
 
     <section class="section" aria-label="Главная ссылка">
