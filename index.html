@@ -52,14 +52,15 @@
         <button class="iconBtn" type="button" id="themeBtn" aria-label="Настройки темы" aria-expanded="false">
           ⚙️
         </button>
+      </div>
 
-        <div class="panel" id="themePanel" role="dialog" aria-label="Тема" aria-hidden="true">
-          <div class="panelTitle">Тема</div>
-          <div class="seg" role="group" aria-label="Выбор темы">
-            <button class="segBtn" type="button" data-theme="dark">Тёмная</button>
-            <button class="segBtn" type="button" data-theme="light">Светлая</button>
-            <button class="segBtn" type="button" data-theme="system">Система</button>
-          </div>
+      <!-- panel moved OUT of .brand to avoid overflow clipping -->
+      <div class="panel" id="themePanel" role="dialog" aria-label="Тема" aria-hidden="true">
+        <div class="panelTitle">Тема</div>
+        <div class="seg" role="group" aria-label="Выбор темы">
+          <button class="segBtn" type="button" data-theme="dark">Тёмная</button>
+          <button class="segBtn" type="button" data-theme="light">Светлая</button>
+          <button class="segBtn" type="button" data-theme="system">Система</button>
         </div>
       </div>
 
